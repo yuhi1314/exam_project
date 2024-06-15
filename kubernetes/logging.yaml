@@ -123,19 +123,3 @@ spec:
         env:
         - name: "discovery.type"
           value: "single-node"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: elasticsearch
-  namespace: dev
-spec:
-  type: NodePort  # Change the type to NodePort
-  selector:
-    app: elasticsearch
-  ports:
-    - name: tcp
-      protocol: TCP
-      port: 9200
-      targetPort: 9200
-      nodePort: 30002  # Set the desired NodePort value here
