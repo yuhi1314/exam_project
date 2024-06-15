@@ -6,10 +6,10 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: exam_web
+  name: exam-web
   namespace: dev
   labels:
-    run: exam_web
+    run: exam-web
 spec:
   type: NodePort  # Change the type to NodePort
   ports:
@@ -18,22 +18,22 @@ spec:
     protocol: TCP
     name: http
   selector:
-    run: exam_web
+    run: exam-web
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: exam_web
+  name: exam-web
   namespace: dev
 spec:
   selector:
     matchLabels:
-      run: exam_web
+      run: exam-web
   replicas: 1
   template:
     metadata:
       labels:
-        run: exam_web
+        run: exam-web
     spec:
       containers:
       - name: exam_web
