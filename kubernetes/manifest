@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exam_web
+  namespace: dev
+  labels:
+    run: exam_web
+spec:
+  type: NodePort  # Change the type to NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    run: exam_web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exam_web
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      run: exam_web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: exam_web
+    spec:
+      containers:
+      - name: exam_web
+        image: yuhi1314/serving-web-content-demo
+        ports:
+        - containerPort: 8080
