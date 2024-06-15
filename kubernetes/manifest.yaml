@@ -36,7 +36,7 @@ spec:
         run: exam-web
     spec:
       containers:
-      - name: exam_web
+      - name: exam-web
         image: yuhi1314/serving-web-content-demo
         ports:
         - containerPort: 8080
