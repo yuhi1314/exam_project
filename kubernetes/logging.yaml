@@ -119,7 +119,7 @@ spec:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
         resources:
           requests:
-            memory: "1Gi"
+            memory: "2Gi"
         env:
         - name: "discovery.type"
           value: "single-node"
