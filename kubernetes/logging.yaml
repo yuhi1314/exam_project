@@ -51,6 +51,7 @@ metadata:
   name: logstash
   namespace: dev
 spec:
+  type: NodePort  # Change the type to NodePort
   selector:
     app: logstash
   ports:
@@ -87,6 +88,7 @@ metadata:
   name: kibana
   namespace: dev
 spec:
+  type: NodePort  # Change the type to NodePort
   selector:
     app: kibana
   ports:
@@ -128,6 +130,7 @@ metadata:
   name: elasticsearch
   namespace: dev
 spec:
+  type: NodePort  # Change the type to NodePort
   selector:
     app: elasticsearch
   ports:
