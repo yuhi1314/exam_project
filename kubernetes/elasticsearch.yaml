@@ -26,7 +26,6 @@ spec:
             - containerPort: 9200
             - containerPort: 9300
           # Добавьте секцию "podIP" с желаемым IP-адресом
-          podIP: 10.244.151.207
       restartPolicy: Always
 
   selector:
