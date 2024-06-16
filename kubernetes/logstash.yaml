@@ -39,7 +39,7 @@ spec:
             - containerPort: 5000
           volumeMounts:
             - name: logstash-config
-              mountPath: /usr/share/logstash/config
+              mountPath: /usr/share/logstash.conf
       volumes:
         - name: logstash-config
           configMap:
