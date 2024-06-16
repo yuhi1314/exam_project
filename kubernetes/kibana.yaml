@@ -21,6 +21,8 @@ spec:
           env:
             - name: elasticsearch.url
               value: "http://elasticsearch:9200"
+          securityContext:
+            privileged: true 
 ---
 apiVersion: v1
 kind: Service
