@@ -20,7 +20,7 @@ spec:
             - containerPort: 5601
           env:
             - name: elasticsearch.url
-              value: "http://elasticsearch:9200"
+              value: "http://10.244.1.3:9200"
           securityContext:
             privileged: true 
 ---
