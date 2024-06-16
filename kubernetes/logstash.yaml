@@ -13,7 +13,7 @@ data:
     }
     output {
       elasticsearch {
-        hosts => ["10.244.1.8:9200"]
+        hosts => ["10.244.1.10:9200"]
       }
     }
 ---
