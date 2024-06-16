@@ -8,7 +8,7 @@ data:
     input {
       file {
         path => "/logs/log.log"
-		type => "logback"
+        type => "logback"
       }
     }
     output {
@@ -51,7 +51,7 @@ metadata:
   name: logstash
   namespace: dev
 spec:
-  type: NodePort  # Change the type to NodePort
+  type: NodePort
   selector:
     app: logstash
   ports:
@@ -59,4 +59,4 @@ spec:
       protocol: TCP
       port: 5000
       targetPort: 5000
-      nodePort: 30000  # Set the desired NodePort value here
+      nodePort: 30000
