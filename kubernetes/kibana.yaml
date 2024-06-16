@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-      app: kibana
+        app: kibana
     spec:
       containers:
         - name: kibana
