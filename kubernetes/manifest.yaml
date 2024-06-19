@@ -13,7 +13,7 @@ metadata:
 spec:
   type: NodePort  # Change the type to NodePort
   ports:
-  - port: 8080
+  - port: 80
     targetPort: 8080
     protocol: TCP
     name: http
@@ -38,8 +38,6 @@ spec:
       containers:
       - name: exam-web
         image: yuhi1314/phpk8s:30
-        ports:
-          - containerPort: 8080
         volumeMounts:
           - mountPath: /logs
             name: access-logs
@@ -47,7 +45,7 @@ spec:
         image: yuhi1314/fluentd-agent:30
         imagePullPolicy: Always
         ports:
-          - containerPort: 8085
+          - containerPort: 8080
         volumeMounts:
           - mountPath: /logs
             name: access-logs
