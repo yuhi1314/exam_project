@@ -21,7 +21,7 @@ spec:
   template:
     metadata:
       labels:
-        app:  exam-web
+        app: exam-web
     spec:
       containers:
         - name: application
