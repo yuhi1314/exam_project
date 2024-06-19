@@ -44,7 +44,7 @@ spec:
           - mountPath: /logs
             name: access-logs
       - name: fluentd-agent
-        image: yuhi1314/fluend:27
+        image: yuhi1314/yuhi1314/fluentd-agent:29
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
