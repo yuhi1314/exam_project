@@ -5,7 +5,7 @@ metadata:
   namespace: dev
 spec:
   ports:
-  - port: 80
+  - port: 8080
     targetPort: 8081
   selector:
     app: exam-web
