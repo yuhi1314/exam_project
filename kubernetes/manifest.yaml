@@ -47,7 +47,7 @@ spec:
           ports:
             - containerPort: 8080
         - name: fluentd-agent
-          image: 
+          image: yuhi1314/fluend:1
           imagePullPolicy: Always
           volumeMounts:
             -
