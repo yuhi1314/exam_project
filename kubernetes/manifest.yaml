@@ -18,6 +18,9 @@ metadata:
   namespace: dev
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: exam-web
   template:
     metadata:
       labels:
@@ -28,12 +31,11 @@ spec:
           image: yuhi1314/phpk8s:30
           imagePullPolicy: Always
           resources:
-             requests:
-                cpu: "0.1"
-                memory: "100Mi"
+            requests:
+              cpu: "0.1"
+              memory: "100Mi"
           volumeMounts:
-            -
-              mountPath: /logs
+            - mountPath: /logs
               name: access-logs
           ports:
             - containerPort: 8080
@@ -41,10 +43,8 @@ spec:
           image: yuhi1314/fluentd-agent:30
           imagePullPolicy: Always
           volumeMounts:
-            -
-              mountPath: /tomcat/logs
+            - mountPath: /logs
               name: access-logs
       volumes:
-        -
-          name: access-logs
+        - name: access-logs
           emptyDir: {}
