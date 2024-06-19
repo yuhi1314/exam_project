@@ -20,27 +20,15 @@
     </encoder>
   </appender>
 
-  <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>10.244.2.6:5000</destination>
-        <!-- encoder is required -->
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <timeZone>Europe/Istanbul</timeZone>
-            <timestampPattern>yyyy-MM-dd HH:mm:ss.SSS, Europe/Istanbul</timestampPattern>
-        </encoder>
-        <keepAliveDuration>5 minutes</keepAliveDuration>
-    </appender>
-
 <root level="info">
     <appender-ref ref="STDOUT"/>
 </root>
 <logger name="app.minions.servingwebcontentdemo" additivity="false" level="trace">
     <appender-ref ref="STDOUT"/>
     <appender-ref ref="SAVE-TO-FILE"/>
-    <appender-ref ref="STASH"/> 
 </logger>
 <logger name="app.minions.servingwebcontentdemo" additivity="false" level="error">
     <appender-ref ref="STDOUT"/>
-    <appender-ref ref="STASH"/> 
 </logger>
 
 </configuration>
