@@ -37,6 +37,6 @@ spec:
     spec:
       containers:
       - name: exam-web
-        image: yuhi1314/phpk8s:21
+        image: yuhi1314/phpk8s:23
         ports:
         - containerPort: 8080
