@@ -11,39 +11,40 @@ spec:
     app: exam-web
   type: NodePort
 ---
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: exam-web
   namespace: dev
 spec:
-  selector:
-    matchLabels:
-      run: exam-web
   replicas: 1
   template:
     metadata:
       labels:
-        run: exam-web
+        app:  exam-web
     spec:
       containers:
-      - name: exam-web
-        image: yuhi1314/phpk8s:30
-        resources:
-            requests:
-              cpu: "0.1"
-              memory: "100Mi"
-        volumeMounts:
-          - mountPath: /logs
-            name: access-logs
-      - name: fluentd-agent
-        image: yuhi1314/fluentd-agent:30
-        imagePullPolicy: Always
-        ports:
-          - containerPort: 8080
-        volumeMounts:
-          - mountPath: /logs
-            name: access-logs
+        - name: application
+          image: yuhi1314/phpk8s:30
+          imagePullPolicy: Always
+          resources:
+             requests:
+                cpu: "0.1"
+                memory: "100Mi"
+          volumeMounts:
+            -
+              mountPath: /logs
+              name: access-logs
+          ports:
+            - containerPort: 8080
+        - name: fluentd-agent
+          image: yuhi1314/fluentd-agent:30
+          imagePullPolicy: Always
+          volumeMounts:
+            -
+              mountPath: /tomcat/logs
+              name: access-logs
       volumes:
-        - name: access-logs
+        -
+          name: access-logs
           emptyDir: {}
