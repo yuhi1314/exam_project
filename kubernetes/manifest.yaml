@@ -39,21 +39,18 @@ spec:
       - name: exam-web
         image: yuhi1314/phpk8s:25
         ports:
-        - containerPort: 8080
+          - containerPort: 8080
         volumeMounts:
-            -
-              mountPath: /logs
-              name: access-logs
-          ports:
-            - containerPort: 8080
-        - name: fluentd-agent
-          image: yuhi1314/fluend:1
-          imagePullPolicy: Always
-          volumeMounts:
-            -
-              mountPath:  /logs
-              name: access-logs
+          - mountPath: /logs
+            name: access-logs
+      - name: fluentd-agent
+        image: yuhi1314/fluend:1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+          - mountPath: /logs
+            name: access-logs
       volumes:
-        -
-          name: access-logs
+        - name: access-logs
           emptyDir: {}
