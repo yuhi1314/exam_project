@@ -11,6 +11,10 @@
     </encoder>
   </appender>
 
+   <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+   </appender>
+
   <appender name="SAVE-TO-FILE" class="ch.qos.logback.core.FileAppender">
     <file>${LOG_DIR}/log.log</file>
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -26,9 +30,12 @@
 <logger name="app.minions.servingwebcontentdemo" additivity="false" level="trace">
     <appender-ref ref="STDOUT"/>
     <appender-ref ref="SAVE-TO-FILE"/>
+    <appender-ref ref="consoleAppender"/>
+  
 </logger>
 <logger name="app.minions.servingwebcontentdemo" additivity="false" level="error">
     <appender-ref ref="STDOUT"/>
+    <appender-ref ref="consoleAppender"/>
 </logger>
 
 </configuration>
