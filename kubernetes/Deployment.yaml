@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exam-web
+  namespace: dev
+  labels:
+    run: exam-web
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    run: exam-web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exam-web
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      run: exam-web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: exam-web
+    spec:
+      containers:
+      - name: exam-web
+        image: yuhi1314/phpk8s:31
+        volumeMounts:
+            -
+              mountPath: /logs
+              name: access-logs
+        ports:
+        - containerPort: 8080
+      - name: fluentd-agent
+        image: yuhi1314/fluentd-agent:103
+        ports:
+        - containerPort: 24224
+        volumeMounts:
+        - mountPath: /logs
+          name: access-logs
+      volumes:
+      - name: access-logs
+        emptyDir: {}
