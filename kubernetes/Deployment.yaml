@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - name: exam-web
-        image: yuhi1314/phpk8s:31
+        image: yuhi1314/phpk8s:51
         volumeMounts:
             -
               mountPath: /logs
@@ -45,7 +45,7 @@ spec:
         ports:
         - containerPort: 8080
       - name: fluentd-agent
-        image: yuhi1314/fluentd-agent:103
+        image: yuhi1314/fluentd-agent:51
         ports:
         - containerPort: 24224
         volumeMounts:
