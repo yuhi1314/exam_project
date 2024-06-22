@@ -3,6 +3,7 @@ pipeline {
 
   environment {
     registry = "yuhi1314/phpk8s"
+    registry_fluentd = "yuhi1314/fluentd-agent"
     registryCredential = '188ab87c-8a6d-48c7-b5e8-34dc6e75e50a'
     dockerImage = ''
   }
@@ -23,15 +24,15 @@ pipeline {
     stage("Maven Build") {
       steps {
         script {
-          sh "mvn clean install -T 1C" // -T 1C is to make build faster using multithreading
+          sh "mvn clean install -T 1C" // -T 1C используется для ускорения сборки с помощью многопоточности
         }
       }
     }
     
     stage("Test Cases") {
-        steps {
-           sh "mvn test"
-            }
+      steps {
+        sh "mvn test"
+      }
     }
 
     stage('Building our image') {
@@ -48,6 +49,51 @@ pipeline {
           docker.withRegistry('', registryCredential) {
             dockerImage.push()
           }
+        }
+      }
+    }
+
+    stage("Add Fluentd Stages") {
+      steps {
+        script {
+          dir('fluentd') {
+            stage('Building our image') {
+              steps {
+                script {
+                  dockerImage = docker.build("${registry_fluentd}:${BUILD_NUMBER}")
+                }
+              }
+            }
+
+            stage('Deploy our image') {
+              steps {
+                script {
+                  docker.withRegistry('', registryCredential) {
+                    dockerImage.push()
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    stage("Return to Original Repository") {
+      steps {
+        script {
+          git branch: 'master', url: 'https://github.com/yuhi1314/exam_project.git'
+        }
+      }
+    }
+
+    stage("Setup Monitoring Namespace and Helm Chart") {
+      steps {
+        script {
+          sh "kubectl create ns monitoring"
+          sh "helm repo add prometheus-community https://prometheus-community.github.io/helm-charts"
+          sh "helm repo update"
+          sh "helm install -n monitoring prometheus-operator prometheus-community/kube-prometheus-stack"
         }
       }
     }
