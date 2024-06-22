@@ -3,8 +3,8 @@ pipeline {
 
   environment {
     registry = "yuhi1314/phpk8s"
-    registry_fluentd = "yuhi1314/fluentd-agent"
-    registryCredential = '188ab87c-8a6d-48c7-b5e8-34dc6e75e50a'
+    registry_fl = "yuhi1314/fluentd-agent"
+    registryCredential = '18ae2b99-8309-4c65-a727-c424f1fd8e71'
     dockerImage = ''
   }
   tools {
@@ -16,7 +16,7 @@ pipeline {
     stage("Git Checkout") {
       steps {
         script {
-          git branch: 'master', url: 'https://github.com/yuhi1314/exam_project.git'
+          git branch: 'main', url: 'https://github.com/yuhi1314/exam_project.git'
         }
       }
     }
@@ -24,7 +24,7 @@ pipeline {
     stage("Maven Build") {
       steps {
         script {
-          sh "mvn clean install -T 1C" // -T 1C используется для ускорения сборки с помощью многопоточности
+          sh "mvn clean install -T 1C" // -T 1C is used to speed up the build using multithreading
         }
       }
     }
@@ -37,8 +37,8 @@ pipeline {
 
     stage('Building our image') {
       steps {
-        script {
-          dockerImage = docker.build("${registry}:${BUILD_NUMBER}")
+        script  {
+            dockerImage = docker.build("${registry}:${BUILD_NUMBER}")
         }
       }
     }
@@ -53,65 +53,24 @@ pipeline {
       }
     }
 
-    stage("Add Fluentd Stages") {
+    stage('Building our image with Dockerfile in fluentd folder') {
       steps {
         script {
           dir('fluentd') {
-            stage('Building our image') {
-              steps {
-                script {
-                  dockerImage = docker.build("${registry_fluentd}:${BUILD_NUMBER}")
-                }
-              }
-            }
-
-            stage('Deploy our image') {
-              steps {
-                script {
-                  docker.withRegistry('', registryCredential) {
-                    dockerImage.push()
-                  }
-                }
-              }
+            dockerImage = docker.build("${registry_fl}:${BUILD_NUMBER}")
+            docker.withRegistry('', registryCredential) {
+              dockerImage.push()
             }
           }
         }
       }
     }
 
-    stage("Return to Original Repository") {
-      steps {
-        script {
-          git branch: 'master', url: 'https://github.com/yuhi1314/exam_project.git'
-        }
-      }
-    }
-
-    stage("Setup Monitoring Namespace and Helm Chart") {
-      steps {
-        script {
-          sh "kubectl create ns monitoring"
-          sh "helm repo add prometheus-community https://prometheus-community.github.io/helm-charts"
-          sh "helm repo update"
-          sh "helm install -n monitoring prometheus-operator prometheus-community/kube-prometheus-stack"
-        }
-      }
-    }
 
     stage("Apply the Kubernetes files") {
       steps {
         script {
           sh "kubectl apply -f kubernetes/"
-        }
-      }
-    }
-  }
-
-  post {
-    always {
-      script {
-        if (currentBuild.currentResult == 'FAILURE') {
-          step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "Test@test.com", sendToIndividuals: true])
         }
       }
     }
