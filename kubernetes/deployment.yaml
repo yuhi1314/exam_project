@@ -16,7 +16,7 @@ spec:
         app: hello-world-service
     spec:
       containers:
-      - image: yuhi1314/phpk8s:53
+      - image: yuhi1314/phpk8s:27
         name: hello-world-service
         volumeMounts:
             -
@@ -25,7 +25,7 @@ spec:
         ports:
         - containerPort: 8080
       - name: fluentd-agent
-        image: yuhi1314/fluentd-agent:103
+        image: yuhi1314/fluentd-agent:27
         ports:
         - containerPort: 24224
         volumeMounts:
