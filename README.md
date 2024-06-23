@@ -18,12 +18,14 @@ kubectl expose service prometheus-operated  --namespace monitoring --type=NodePo
 потом
 kubectl port-forward svc/prom-ext  31993:9090 -n monitoring --address 185.119.196.182
 с остальными по аналогии
+
 ![image](https://github.com/yuhi1314/exam_project/assets/123218375/b1a94434-0255-4c2e-b818-16c6dc9bd85f)
 
 
 kibana
 
 http:/185.119.196.182:3006
+
 ![image](https://github.com/yuhi1314/exam_project/assets/123218375/1f7c402f-3642-42cb-9b5f-9fbc2cd4ed71)
 
 
