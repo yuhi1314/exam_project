@@ -66,11 +66,18 @@ pipeline {
       }
     }
 
-
     stage("Apply the Kubernetes files") {
       steps {
         script {
           sh "kubectl apply -f kubernetes/"
+        }
+      }
+    }
+
+    stage("Apply the Kubernetes files for monitoring") {
+      steps {
+        script {
+          sh "kubectl apply -f monitoring/"
         }
       }
     }
