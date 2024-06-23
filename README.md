@@ -1,4 +1,5 @@
-![image](https://github.com/yuhi1314/exam_project/assets/123218375/f1bdaecb-c5f4-4c37-a44d-37f53b72db35)Pre-Install: 
+
+Pre-Install: 
 * kuberntes cluster;
 
 
