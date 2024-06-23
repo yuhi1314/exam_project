@@ -28,6 +28,7 @@ kubectl port-forward svc/prom-ext  31993:9090 -n monitoring --address 185.119.19
 ![image](https://github.com/yuhi1314/exam_project/assets/123218375/b1a94434-0255-4c2e-b818-16c6dc9bd85f)
 
 http://185.119.196.182:30528/
+
 http://185.119.196.182:31993
 
 
