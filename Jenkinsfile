@@ -38,7 +38,6 @@ pipeline {
     stage('Building our image') {
       steps {
         script  {
-          dir('exam_project') {
             dockerImage = docker.build("${registry}:${BUILD_NUMBER}")
             docker.withRegistry('', registryCredential) {
               dockerImage.push()
@@ -51,7 +50,7 @@ pipeline {
     stage('Building our image with Dockerfile in fluentd folder') {
       steps {
         script {
-          dir('exam_project/fluentd') {
+          dir('fluentd') {
             dockerImage = docker.build("${registry_fl}:${BUILD_NUMBER}")
             docker.withRegistry('', registryCredential) {
               dockerImage.push()
